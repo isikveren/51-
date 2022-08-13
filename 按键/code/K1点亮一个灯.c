@@ -1,7 +1,6 @@
 #include <REGX52.h>
 #include <INTRINS.H>
 
-void Delay();
 void main()
 {
 

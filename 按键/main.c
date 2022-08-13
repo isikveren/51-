@@ -1,32 +1,39 @@
 #include <REGX52.h>
 #include <INTRINS.H>
 
-void Delay();
-void main(){
-	 
-
-	while(1)
-	{
-		if(P3_1 == 0){
-			P2_0 = 0;
-		}
-		else {
-			P2_0 = 1;
-		}
-
-	}
-}
-
-void Delay()		//@12.000MHz  100ms
+void Delay1ms()		//@12.000MHz
 {
 	unsigned char i, j;
 
-	i = 195;
-	j = 138;
+	i = 2;
+	j = 239;
 	do
 	{
 		while (--j);
 	} while (--i);
+}
+void Delay(unsigned int x) //delay x ms
+{
+	while(x--){
+		Delay1ms();
+	}
+}
+
+void main(){
+	unsigned char LedNum = 0;
+	
+	while(1)
+	{
+		if(P3_1 == 0){
+			Delay(20);
+			while(P3_1 == 0);
+			Delay(20);
+			LedNum++;
+			P2 = ~LedNum;
+			
+		}
+		
+	}
 }
 
 

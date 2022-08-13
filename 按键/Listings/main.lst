@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   MAIN                                                                  08/08/2022 12:45:50 PAGE 1   
+C51 COMPILER V9.54   MAIN                                                                  08/14/2022 06:47:51 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
@@ -11,41 +11,46 @@ line level    source
    1          #include <REGX52.h>
    2          #include <INTRINS.H>
    3          
-   4          void Delay();
-   5          void main(){
-   6   1               
+   4          void Delay1ms()         //@12.000MHz
+   5          {
+   6   1              unsigned char i, j;
    7   1      
-   8   1              while(1)
-   9   1              {
-  10   2                      if(P3_1 == 0){
-  11   3                              P2_0 = 0;
-  12   3                      }
-  13   2                      else {
-  14   3                              P2_0 = 1;
-  15   3                      }
-  16   2                      
-  17   2                      
-  18   2                      
+   8   1              i = 2;
+   9   1              j = 239;
+  10   1              do
+  11   1              {
+  12   2                      while (--j);
+  13   2              } while (--i);
+  14   1      }
+  15          void Delay(unsigned int x) //delay x ms
+  16          {
+  17   1              while(x--){
+  18   2                      Delay1ms();
   19   2              }
   20   1      }
   21          
-  22          void Delay()            //@12.000MHz  100ms
-  23          {
-  24   1              unsigned char i, j;
-  25   1      
-  26   1              i = 195;
-  27   1              j = 138;
-  28   1              do
-  29   1              {
-  30   2                      while (--j);
-  31   2              } while (--i);
-  32   1      }
-  33          
-  34          
+  22          void main(){
+  23   1              unsigned char LedNum = 0;
+  24   1              
+  25   1              while(1)
+  26   1              {
+  27   2                      if(P3_1 == 0){
+  28   3                              Delay(20);
+  29   3                              while(P3_1 == 0);
+  30   3                              Delay(20);
+  31   3                              LedNum++;
+  32   3                              P2 = ~LedNum;
+  33   3                              
+  34   3                      }
+  35   2                      
+  36   2              }
+  37   1      }
+  38          
+  39          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     20    ----
+   CODE SIZE        =     58    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
